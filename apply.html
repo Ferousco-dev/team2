@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply | OpportunityHub</title><link rel="stylesheet" href="css/style.css"></head><body>
+<header class="site-header"><nav class="navbar"><a class="brand" href="index.html">OpportunityHub</a><ul class="nav-links"><li><a href="opportunities.html">Opportunities</a></li><li><a href="login.html">Login</a></li></ul></nav></header>
+<main class="section narrow"><a class="back-link" href="opportunities.html">&larr; Back to opportunities</a>
+<form class="auth-card wide-card" id="applicationForm" novalidate><header><p class="eyebrow">APPLICATION</p><h1>Submit your application</h1>
+<p id="applicationOpportunity">Loading opportunity...</p></header><p class="form-message" id="applicationMessage" role="alert"></p>
+<section class="form-group"><label for="applicantName">Full name</label><input id="applicantName" required><small class="error" id="applicantNameError"></small></section>
+<section class="form-group"><label for="applicantEmail">Email address</label><input id="applicantEmail" type="email" required><small class="error" id="applicantEmailError"></small></section>
+<section class="form-group"><label for="applicantCourse">Course / Programme</label><input id="applicantCourse" required><small class="error" id="applicantCourseError"></small></section>
+<section class="form-group"><label for="applicantPhone">Phone number</label><input id="applicantPhone" type="tel" required><small class="error" id="applicantPhoneError"></small></section>
+<section class="form-group"><label for="motivation">Why are you interested?</label><textarea id="motivation" rows="7" minlength="50" required></textarea><small class="error" id="motivationError"></small></section>
+<section class="form-group"><label for="resume">Resume / CV (PDF, DOC or DOCX, max 5MB)</label><input id="resume" type="file" accept=".pdf,.doc,.docx" required><small class="error" id="resumeError"></small></section>
+<button class="button button-full" type="submit">Submit application</button></form></main>
+<footer class="site-footer"><p>&copy; 2026 OpportunityHub.</p></footer><script src="js/opportunities.js"></script><script src="js/apply.js"></script></body></html>

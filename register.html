@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | OpportunityHub</title><link rel="stylesheet" href="css/style.css"></head><body><main class="auth-page">
+<a class="brand auth-brand" href="index.html">OpportunityHub</a><form class="auth-card" id="registerForm" novalidate>
+<header><p class="eyebrow">CREATE ACCOUNT</p><h1>Join OpportunityHub</h1><p>Create an account to apply for opportunities.</p></header>
+<p class="form-message" id="registerMessage" role="alert"></p>
+<section class="form-group"><label for="fullName">Full name</label><input id="fullName" type="text" required><small class="error" id="fullNameError"></small></section>
+<section class="form-group"><label for="email">Email address</label><input id="email" type="email" required><small class="error" id="emailError"></small></section>
+<section class="form-group"><label for="course">Course / Programme</label><input id="course" type="text" required><small class="error" id="courseError"></small></section>
+<section class="form-group"><label for="phone">Phone number</label><input id="phone" type="tel" required><small class="error" id="phoneError"></small></section>
+<section class="form-group"><label for="password">Password</label><input id="password" type="password" minlength="8" required><small class="error" id="passwordError"></small></section>
+<section class="form-group"><label for="confirmPassword">Confirm password</label><input id="confirmPassword" type="password" required><small class="error" id="confirmPasswordError"></small></section>
+<button class="button button-full" type="submit">Create account</button><p class="auth-footer">Already have an account? <a href="login.html">Login</a></p>
+</form></main><script src="js/auth.js"></script></body></html>

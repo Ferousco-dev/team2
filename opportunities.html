@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Browse internship and job opportunities on OpportunityHub."><title>Opportunities | OpportunityHub</title>
+<link rel="stylesheet" href="css/style.css"></head><body>
+<header class="site-header"><nav class="navbar" aria-label="Main navigation"><a class="brand" href="index.html">OpportunityHub</a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-menu">Menu</button>
+<ul class="nav-links" id="main-menu"><li><a href="index.html">Home</a></li><li><a href="opportunities.html" aria-current="page">Opportunities</a></li>
+<li><a href="index.html#about">About</a></li><li><a href="login.html">Login</a></li><li><a class="button button-small" href="register.html">Register</a></li></ul></nav></header>
+<main><section class="page-hero"><p class="eyebrow">OPPORTUNITIES</p><h1>Find an opportunity that fits you.</h1><p>Search and filter internships and jobs by keyword, type and location.</p></section>
+<section class="section"><form class="filter-panel" id="filterForm">
+<section class="form-group"><label for="keyword">Keyword</label><input id="keyword" name="keyword" type="search" placeholder="Search title, company or skill"></section>
+<section class="form-group"><label for="type">Type</label><select id="type"><option value="">All types</option><option>Internship</option><option>Job</option></select></section>
+<section class="form-group"><label for="location">Location</label><select id="location"><option value="">All locations</option><option>Lagos</option><option>Abuja</option><option>Ibadan</option><option>Remote</option></select></section>
+<button class="button" type="submit">Apply filters</button><button class="button button-secondary" id="clearFilters" type="button">Clear</button>
+</form><p class="result-count" id="resultCount" aria-live="polite"></p><section class="card-grid" id="opportunityList" aria-live="polite"></section></section></main>
+<footer class="site-footer"><p>&copy; 2026 OpportunityHub. Built for the Web Technologies Group Project.</p></footer>
+<script src="js/opportunities.js"></script></body></html>
