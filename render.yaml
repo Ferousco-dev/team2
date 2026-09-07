@@ -1,7 +1,7 @@
 services:
   - type: web
     name: opportunity-hub-web
-    env: php
+    runtime: docker
     plan: free
     envVars:
       - key: DB_HOST
