@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y libpq-dev \
 # Enable Apache mod_rewrite (optional but useful)
 RUN a2enmod rewrite
 
+# Match the frontend's 5 MB CV limit, with room for multipart form fields.
+RUN printf 'upload_max_filesize=5M\npost_max_size=6M\n' > /usr/local/etc/php/conf.d/uploads.ini
+
 # Copy project files to the container
 COPY . /var/www/html/
 

@@ -1,0 +1,9 @@
+node_modules/
+.cache/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example
+uploads/
+__pycache__/
