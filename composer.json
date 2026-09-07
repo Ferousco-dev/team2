@@ -1,0 +1,8 @@
+{
+    "name": "opportunityhub/backend",
+    "description": "OpportunityHub Backend for Render Deployment",
+    "type": "project",
+    "require": {
+        "php": ">=8.0"
+    }
+}
