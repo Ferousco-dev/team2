@@ -3,8 +3,6 @@ services:
     name: opportunity-hub-web
     env: php
     plan: free
-    buildCommand: composer install
-    startCommand: apache2-foreground
     envVars:
       - key: DB_HOST
         fromDatabase:
@@ -31,4 +29,4 @@ databases:
   - name: opportunity-hub-db
     plan: free
     databaseName: opportunityhub
-    user: postgres
+    user: oh_admin
