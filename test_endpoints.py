@@ -1,52 +1,49 @@
-import requests
+"""Read-only API smoke checks. Does not register users or submit applications."""
+import argparse
 import json
+import os
+import sys
+import urllib.error
+import urllib.request
 
-# Replace with your local XAMPP/Postgres URL or your Render URL
-# Example: "https://your-app.onrender.com/api"
-BASE_URL = "http://localhost/OpportunityHub/api"
+DEFAULT_BASE_URL = "https://opportunity-hub-web.onrender.com/api/"
 
-def test_json_response(name, url, method="GET", data=None, files=None):
-    print(f"Testing {name}...", end=" ")
+
+def check(name, url, validate, timeout):
+    print(f"Testing {name}...", end=" ", flush=True)
+    request = urllib.request.Request(url, headers={"Accept": "application/json"})
     try:
-        if method == "GET":
-            response = requests.get(url, timeout=5)
-        else:
-            if files:
-                response = requests.post(url, data=data, files=files, timeout=5)
-            else:
-                response = requests.post(url, json=data, timeout=5)
-
-        # Check if content type is JSON
-        content_type = response.headers.get('Content-Type', '')
-        if 'application/json' not in content_type:
-            print(f"\033[91mFAILED\033[0m (Invalid Content-Type: {content_type})")
-            return False
-
-        # Try parsing JSON
-        try:
-            result = response.json()
-            print("\033[92mPASSED\033[0m")
-            return True
-        except json.JSONDecodeError:
-            print("\033[91mFAILED\033[0m (Response is not valid JSON)")
-            return False
-
-    except Exception as e:
-        print(f"\033[91mERROR\033[0m ({str(e)})")
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            if response.status != 200:
+                raise ValueError(f"unexpected HTTP status {response.status}")
+            if "application/json" not in response.headers.get("Content-Type", ""):
+                raise ValueError("response is not application/json")
+            data = json.load(response)
+            if not isinstance(data, dict) or not validate(data):
+                raise ValueError(f"unexpected API response: {data.get('message', 'invalid shape') if isinstance(data, dict) else 'invalid shape'}")
+        print("PASSED")
+        return True
+    except (urllib.error.URLError, ValueError, TimeoutError, OSError) as error:
+        print(f"FAILED ({error})")
         return False
 
-def run_suite():
-    print("=== OpportunityHub Backend Verification Suite ===")
-    print(f"Target: {BASE_URL}\n")
 
-    # Check if DB connection works (Opportunities will fail if DB is down)
-    test_json_response("GET Opportunities", f"{BASE_URL}/opportunities.php")
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--base-url", default=os.getenv("API_BASE_URL", DEFAULT_BASE_URL))
+    parser.add_argument("--timeout", type=float, default=90)
+    args = parser.parse_args()
+    base = args.base_url.rstrip("/")
+    print(f"=== OpportunityHub API verification ===\nTarget: {base}\n")
+    checks = [
+        ("opportunity list", "opportunities.php", lambda data: data.get("success") is True and isinstance(data.get("opportunities"), list)),
+        ("filtered opportunities", "opportunities.php?keyword=frontend", lambda data: data.get("success") is True and isinstance(data.get("opportunities"), list)),
+        ("session check", "auth.php?action=me", lambda data: isinstance(data.get("loggedIn"), bool) and data.get("success") is not False),
+    ]
+    results = [check(name, f"{base}/{endpoint}", validate, args.timeout) for name, endpoint, validate in checks]
+    print(f"\n{sum(results)}/{len(results)} checks passed.")
+    return 0 if all(results) else 1
 
-    # Check Auth endpoints
-    test_json_response("GET Auth Me (Session Check)", f"{BASE_URL}/auth.php?action=me")
-
-    # Check failure handling (Invalid Action)
-    test_json_response("POST Auth (Invalid Action)", f"{BASE_URL}/auth.php?action=invalid", method="POST", data={})
 
 if __name__ == "__main__":
-    run_suite()
+    sys.exit(main())
